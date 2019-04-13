@@ -10,11 +10,11 @@ int bfs(Puzzle initialState){
   std::list <Puzzle> explored;
   std::list <Puzzle> childNodes;
 
-  int path_cost = 0;
+  int pathCost = 0;
   Puzzle node;
 
   if(initialState.isFinalState())
-    return path_cost;
+    return pathCost;
 
 
   frontier.push_back(initialState);
@@ -29,10 +29,13 @@ int bfs(Puzzle initialState){
 
     node.getNextStates(&childNodes);
 
+    for(std::list<Puzzle>::iterator it = childNodes.begin(); it != childNodes.end(); it++){
+      if(it->isFinalState())
+        return pathCost;
 
+      frontier.push_back(*it);
+    }
   }
-
-
 }
 
 
@@ -49,6 +52,8 @@ int main(){
   Puzzle input(in,N);
 
   solution = bfs(input);
+
+  std::cout << std::endl << solution << std::endl;
 
 
   return 0;
