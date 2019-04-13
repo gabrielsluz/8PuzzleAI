@@ -25,6 +25,8 @@ class Puzzle{
     void getNextStates(std::list<Puzzle> * nextPuzzles);
     int pathCost();
     void printPath();
+    bool compareBoard(Puzzle cmp);
+    int* returnBoard();
 
 };
 

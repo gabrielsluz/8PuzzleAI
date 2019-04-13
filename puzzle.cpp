@@ -102,3 +102,17 @@ void Puzzle::printPath(){
     std::cout << *it << std::endl;
   }
 }
+
+
+bool Puzzle::compareBoard(Puzzle cmp){
+  int *board = cmp.returnBoard();
+  for(int i=0; i < N; i++){
+    if(board[i] != _board[i])
+      return false;
+  }
+  return true;
+}
+
+int* Puzzle::returnBoard(){
+  return _board;
+}

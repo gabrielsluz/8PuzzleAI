@@ -1,7 +1,18 @@
-#include "bfs.hpp"
 #include "puzzle.hpp"
 #include <iostream>
 #include <list>
+
+bool isPuzzleInList(Puzzle target, std::list<Puzzle> list){
+  std::list<Puzzle>::iterator it;
+
+  for(it = list.begin(); it != list.end(); it++){
+    if(target.compareBoard(*it)){
+      return true;
+    }
+  }
+  return false;
+}
+
 
 
 
@@ -14,7 +25,6 @@ int bfs(Puzzle initialState){
 
   if(initialState.isFinalState())
     return 0;
-
 
   frontier.push_back(initialState);
 
@@ -29,9 +39,11 @@ int bfs(Puzzle initialState){
     node.getNextStates(&childNodes);
 
     for(std::list<Puzzle>::iterator it = childNodes.begin(); it != childNodes.end(); it++){
+      if(isPuzzleInList(*it,frontier) || isPuzzleInList(*it,explored))
+        continue;
+
       if(it->isFinalState())
         return it->pathCost();
-
 
       frontier.push_back(*it);
     }
