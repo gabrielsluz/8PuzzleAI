@@ -3,4 +3,7 @@
 
 #include "puzzle.hpp"
 
+int bfs(Puzzle);
+
+
 #endif
