@@ -49,7 +49,7 @@ void Puzzle::getNextStates(std::list<Puzzle>* nextPuzzles){
     nextVec[_blank] = nextVec[nextBlank];
     nextVec[nextBlank] = 0;
 
-    nextPuzzle.newPuzzle(nextVec,nextBlank);
+    nextPuzzle.newPuzzle(nextVec,_blank);
 
     nextPuzzles->push_back(nextPuzzle);
   }
@@ -64,7 +64,7 @@ void Puzzle::getNextStates(std::list<Puzzle>* nextPuzzles){
     nextVec[_blank] = nextVec[nextBlank];
     nextVec[nextBlank] = 0;
 
-    nextPuzzle.newPuzzle(nextVec,nextBlank);
+    nextPuzzle.newPuzzle(nextVec,_blank);
 
     nextPuzzles->push_back(nextPuzzle);
   }
@@ -79,7 +79,7 @@ void Puzzle::getNextStates(std::list<Puzzle>* nextPuzzles){
     nextVec[_blank] = nextVec[nextBlank];
     nextVec[nextBlank] = 0;
 
-    nextPuzzle.newPuzzle(nextVec,nextBlank);
+    nextPuzzle.newPuzzle(nextVec,_blank);
 
     nextPuzzles->push_back(nextPuzzle);
   }
@@ -94,7 +94,7 @@ void Puzzle::getNextStates(std::list<Puzzle>* nextPuzzles){
     nextVec[_blank] = nextVec[nextBlank];
     nextVec[nextBlank] = 0;
 
-    nextPuzzle.newPuzzle(nextVec,nextBlank);
+    nextPuzzle.newPuzzle(nextVec,_blank);
 
     nextPuzzles->push_back(nextPuzzle);
   }
