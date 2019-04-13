@@ -39,7 +39,7 @@ void Puzzle::getNextStates(std::list<Puzzle>* nextPuzzles){
   Puzzle nextPuzzle;
   int nextBlank=0;
 
-  if(_blank > COLUMNS-1){ //Not first row
+  if(_blank > COLUMNS-1 && _blank - COLUMNS != _lastsBlank){ //Not first row
     nextBlank = _blank - COLUMNS;
 
     for(int i = 0; i < N; i++){
@@ -54,7 +54,7 @@ void Puzzle::getNextStates(std::list<Puzzle>* nextPuzzles){
     nextPuzzles->push_back(nextPuzzle);
   }
 
-  if(_blank < N-COLUMNS){ //Not last row
+  if(_blank < N-COLUMNS && _blank + COLUMNS != _lastsBlank){ //Not last row
     nextBlank = _blank + COLUMNS;
 
     for(int i = 0; i < N; i++){
@@ -69,7 +69,7 @@ void Puzzle::getNextStates(std::list<Puzzle>* nextPuzzles){
     nextPuzzles->push_back(nextPuzzle);
   }
 
-  if(_blank % COLUMNS != 0){ //Not first column
+  if(_blank % COLUMNS != 0  && _blank - 1 != _lastsBlank){ //Not first column
     nextBlank = _blank - 1;
 
     for(int i = 0; i < N; i++){
@@ -84,7 +84,7 @@ void Puzzle::getNextStates(std::list<Puzzle>* nextPuzzles){
     nextPuzzles->push_back(nextPuzzle);
   }
 
-  if(_blank % COLUMNS != COLUMNS-1){ //Not last column
+  if(_blank % COLUMNS != COLUMNS-1  && _blank + 1 != _lastsBlank){ //Not last column
     nextBlank = _blank + 1;
 
     for(int i = 0; i < N; i++){
@@ -98,6 +98,5 @@ void Puzzle::getNextStates(std::list<Puzzle>* nextPuzzles){
 
     nextPuzzles->push_back(nextPuzzle);
   }
-
 
 }
