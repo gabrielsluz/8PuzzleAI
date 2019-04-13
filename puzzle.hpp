@@ -9,7 +9,8 @@ class Puzzle{
     int _blank;
 
   public:
-    Puzzle();
+    Puzzle(int*);
+    bool isFinalState();
 };
 
 #endif
