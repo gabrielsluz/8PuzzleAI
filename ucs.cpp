@@ -24,8 +24,8 @@ int ucs(Puzzle initialState){
 
   Puzzle node;
 
-  if(initialState.isFinalState())
-    return 0;
+  //if(initialState.isFinalState())
+    //return 0;
 
   frontier.push(initialState);
 
@@ -35,18 +35,19 @@ int ucs(Puzzle initialState){
 
     node = frontier.top();
     frontier.pop();
+
+    if(node.isFinalState())
+      return node.pathCost();
+
     explored.push_back(node);
 
     node.getNextStates(&childNodes);
 
     for(std::list<Puzzle>::iterator it = childNodes.begin(); it != childNodes.end(); it++){
-      if(frontier.isPuzzleInHeap(*it) || isPuzzleInList(*it,explored))
-        continue;
-
-      if(it->isFinalState())
-        return it->pathCost();
-
-      frontier.push(*it);
+      if(!(frontier.isPuzzleInHeap(*it)) && !(isPuzzleInList(*it,explored)))
+        frontier.push(*it);
+      else if(frontier.isPuzzleInHeap(*it))
+        frontier.tryReplace(*it);
     }
   }
 }

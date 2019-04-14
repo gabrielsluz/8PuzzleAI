@@ -27,6 +27,7 @@ class Heap{
     bool isEmpty();
 
     bool isPuzzleInHeap(Puzzle target);
+    void tryReplace(Puzzle target);
 
 
 };

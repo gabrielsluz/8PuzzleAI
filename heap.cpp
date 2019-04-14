@@ -97,3 +97,16 @@ bool Heap::isPuzzleInHeap(Puzzle target){
   return false;
 
 }
+
+void Heap::tryReplace(Puzzle target){
+  int i;
+
+  for(i = 0; i < _heap.size(); i++){
+    if(target.compareBoard(_heap[i])){
+      if(target.pathCost() < _heap[i].pathCost()){
+        _heap[i] = target;
+        return;
+      }
+    }
+  }
+}
