@@ -1,6 +1,8 @@
 #include "puzzle.hpp"
 #include <iostream>
 #include <list>
+#include "heap.hpp"
+
 
 bool isPuzzleInList(Puzzle target, std::list<Puzzle> list){
   std::list<Puzzle>::iterator it;
@@ -15,9 +17,8 @@ bool isPuzzleInList(Puzzle target, std::list<Puzzle> list){
 
 
 
-
-int bfs(Puzzle initialState){
-  std::list <Puzzle> frontier;
+int ucs(Puzzle initialState){
+  Heap frontier;
   std::list <Puzzle> explored;
   std::list <Puzzle> childNodes;
 
@@ -26,30 +27,29 @@ int bfs(Puzzle initialState){
   if(initialState.isFinalState())
     return 0;
 
-  frontier.push_back(initialState);
+  frontier.push(initialState);
 
   while(true){
-    if(frontier.empty())
+    if(frontier.isEmpty())
       return -1;
 
-    node = frontier.front();
-    frontier.pop_front();
+    node = frontier.top();
+    frontier.pop();
     explored.push_back(node);
 
     node.getNextStates(&childNodes);
 
     for(std::list<Puzzle>::iterator it = childNodes.begin(); it != childNodes.end(); it++){
-      if(isPuzzleInList(*it,frontier) || isPuzzleInList(*it,explored))
+      if(frontier.isPuzzleInHeap(*it) || isPuzzleInList(*it,explored))
         continue;
 
       if(it->isFinalState())
         return it->pathCost();
 
-      frontier.push_back(*it);
+      frontier.push(*it);
     }
   }
 }
-
 
 
 
@@ -63,7 +63,7 @@ int main(){
 
   Puzzle input(in,N);
 
-  solution = bfs(input);
+  solution = ucs(input);
 
   if(solution == -1)
     std::cout << "Nao tem solucao" << std::endl;
