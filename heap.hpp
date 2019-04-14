@@ -15,10 +15,13 @@ class Heap{
     void _heapifyDown(int i);
     void _heapifyUp(int i);
 
-    bool isSmallerThan(Puzzle A, Puzzle B);
+
+    bool (*isSmallerThan)(Puzzle, Puzzle);
 
 
   public:
+
+    Heap (bool (*isSmallerThanParameter)(Puzzle, Puzzle)) : isSmallerThan(isSmallerThanParameter){}
 
     Puzzle top();
     void push(Puzzle node);

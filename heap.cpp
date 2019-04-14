@@ -2,10 +2,6 @@
 #include <vector>
 #include "puzzle.hpp"
 
-bool Heap::isSmallerThan(Puzzle A, Puzzle B){
-  return A.pathCost() < B.pathCost();
-}
-
 int Heap::_parent(int i){
   return (i-1)/2;
 }
@@ -77,8 +73,6 @@ void Heap::pop(){
   _heap.pop_back();
 
   _heapifyDown(0);
-
-
 }
 
 
@@ -95,7 +89,6 @@ bool Heap::isPuzzleInHeap(Puzzle target){
     }
   }
   return false;
-
 }
 
 void Heap::tryReplace(Puzzle target){
@@ -103,7 +96,7 @@ void Heap::tryReplace(Puzzle target){
 
   for(i = 0; i < _heap.size(); i++){
     if(target.compareBoard(_heap[i])){
-      if(target.pathCost() < _heap[i].pathCost()){
+      if(isSmallerThan(target,_heap[i])){
         _heap[i] = target;
         return;
       }
