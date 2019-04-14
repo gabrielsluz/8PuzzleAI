@@ -5,7 +5,7 @@
 
 
 bool isSmallerThan(Puzzle A, Puzzle B){
-  return A.pathCost() < B.pathCost();
+  return A.greedyH() < B.greedyH();
 }
 
 bool isPuzzleInList(Puzzle target, std::list<Puzzle> list){
@@ -21,7 +21,7 @@ bool isPuzzleInList(Puzzle target, std::list<Puzzle> list){
 
 
 
-int ucs(Puzzle initialState){
+int greedy(Puzzle initialState){
   Heap frontier(isSmallerThan);
   std::list <Puzzle> explored;
   std::list <Puzzle> childNodes;
@@ -65,7 +65,7 @@ int main(){
 
   Puzzle input(in,N);
 
-  solution = ucs(input);
+  solution = greedy(input);
 
   if(solution == -1)
     std::cout << "Nao tem solucao" << std::endl;

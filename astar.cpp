@@ -4,6 +4,10 @@
 #include "heap.hpp"
 
 
+bool isSmallerThan(Puzzle A, Puzzle B){
+  return (A.pathCost() + A.astarH()) < (B.pathCost() + B.astarH());
+}
+
 bool isPuzzleInList(Puzzle target, std::list<Puzzle> list){
   std::list<Puzzle>::iterator it;
 
@@ -17,15 +21,12 @@ bool isPuzzleInList(Puzzle target, std::list<Puzzle> list){
 
 
 
-int ucs(Puzzle initialState){
-  Heap frontier;
+int astar(Puzzle initialState){
+  Heap frontier(isSmallerThan);
   std::list <Puzzle> explored;
   std::list <Puzzle> childNodes;
 
   Puzzle node;
-
-  //if(initialState.isFinalState())
-    //return 0;
 
   frontier.push(initialState);
 
@@ -64,7 +65,7 @@ int main(){
 
   Puzzle input(in,N);
 
-  solution = ucs(input);
+  solution = astar(input);
 
   if(solution == -1)
     std::cout << "Nao tem solucao" << std::endl;

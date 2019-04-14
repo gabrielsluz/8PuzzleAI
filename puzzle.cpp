@@ -116,3 +116,27 @@ bool Puzzle::compareBoard(Puzzle cmp){
 int* Puzzle::returnBoard(){
   return _board;
 }
+
+int Puzzle::greedyH(){ //Returns the number of pieces out of place
+  int sum=0;
+  for(int i = 0; i < N-1; i++){
+    if(_board[i] != i+1)
+      sum++;
+  }
+
+  return sum;
+}
+
+int Puzzle::astarH(){ //Returns the sum of the distances of the miss placed pieces
+  int sum=0;
+  for(int i = 0; i < N-1; i++){
+    if(_board[i] != i+1){
+      if(_board[i] > i+1)
+        sum += _board[i] - (i+1);
+      else
+        sum -= _board[i] - (i+1);
+    }
+  }
+
+  return sum;
+}

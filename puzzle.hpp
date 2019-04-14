@@ -27,6 +27,8 @@ class Puzzle{
     void printPath();
     bool compareBoard(Puzzle cmp);
     int* returnBoard();
+    int greedyH();
+    int astarH();
 
 };
 
