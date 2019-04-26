@@ -29,6 +29,7 @@ class Puzzle{
     int* returnBoard();
     int greedyH();
     int astarH();
+    int piecesInPlace();
 
 };
 
