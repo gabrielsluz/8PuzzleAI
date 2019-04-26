@@ -30,6 +30,9 @@ class Puzzle{
     int greedyH();
     int astarH();
     int piecesInPlace();
+    int getRow(int i);
+    int getColumn(int i);
+    int absoluteValue(int a);
 
 };
 
