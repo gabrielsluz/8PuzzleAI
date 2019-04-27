@@ -1,4 +1,5 @@
 #include "puzzle.hpp"
+#include <cmath>
 #include <iostream>
 
 
@@ -134,8 +135,8 @@ int Puzzle::absoluteValue(int a){
 
 int Puzzle::greedyH(){ //Returns the number of pieces out of place
   int sum=0;
-  for(int i = 0; i < N-1; i++){
-    if(_board[i] != i+1)
+  for(int i = 0; i < N; i++){
+    if(_board[i] != i+1 && _board[i] != 0)
       sum++;
   }
 
@@ -144,9 +145,9 @@ int Puzzle::greedyH(){ //Returns the number of pieces out of place
 
 int Puzzle::astarH(){ //Returns the sum of the Manhattan distances of the miss placed pieces
   int sum=0;
-  for(int i = 0; i < N-1; i++){
-    if(_board[i] != i+1){
-      sum += absoluteValue(getRow(_board[i]) - getRow(i)) + absoluteValue(getColumn(_board[i]) - getColumn(i)); 
+  for(int i = 0; i < N; i++){
+    if(_board[i] != i+1 && _board[i] != 0){
+      sum += absoluteValue(getRow(_board[i]) - getRow(i)) + absoluteValue(getColumn(_board[i]) - getColumn(i));
     }
   }
 
@@ -155,10 +156,21 @@ int Puzzle::astarH(){ //Returns the sum of the Manhattan distances of the miss p
 
 int Puzzle::piecesInPlace(){ //Returns the number of pieces in place
   int sum=0;
-  for(int i = 0; i < N-1; i++){
-    if(_board[i] == i+1)
+  for(int i = 0; i < N; i++){
+    if(_board[i] == 0 && i == N-1)
+      sum++;
+    else if(_board[i] == i+1)
       sum++;
   }
 
   return sum;
+}
+
+//Int does not work with larger values of N
+int Puzzle::toNum(){
+  int id = 0;
+  for(int i = 0; i < N; i++){
+    id += _board[i]*(std::pow(10,i));
+  }
+  return id;
 }

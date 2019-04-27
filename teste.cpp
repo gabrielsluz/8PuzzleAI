@@ -19,7 +19,7 @@ bool isPuzzleInList(Puzzle target, std::list<Puzzle> list){
 
 int bfs(Puzzle initialState){
   std::list <Puzzle> frontier;
-  std::unordered_set <int> explored;
+  std::list <Puzzle> explored;
   std::unordered_set <int> frontierSet;
   std::list <Puzzle> childNodes;
 
@@ -43,16 +43,15 @@ int bfs(Puzzle initialState){
     id = node.toNum();
     frontier.pop_front();
     frontierSet.erase(id);
-    explored.insert(id);
+    explored.push_back(node);
 
     node.getNextStates(&childNodes);
 
     for(std::list<Puzzle>::iterator it = childNodes.begin(); it != childNodes.end(); it++){
       id = it->toNum();
       isInFrontier = frontierSet.find(id) != frontierSet.end();
-      isInExplored = explored.find(id) != explored.end();
 
-      if(isInFrontier || isInExplored)
+      if(isInFrontier || isPuzzleInList(*it,explored))
         continue;
 
       if(it->isFinalState())

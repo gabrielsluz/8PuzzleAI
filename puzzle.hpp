@@ -6,6 +6,7 @@
 
 
 #include <list>
+#include <string>
 
 class Puzzle{
   private:
@@ -33,6 +34,8 @@ class Puzzle{
     int getRow(int i);
     int getColumn(int i);
     int absoluteValue(int a);
+    int toNum();
+
 
 };
 
