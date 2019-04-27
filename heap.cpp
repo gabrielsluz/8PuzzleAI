@@ -92,12 +92,13 @@ bool Heap::isPuzzleInHeap(Puzzle target){
 }
 
 void Heap::tryReplace(Puzzle target){
-  int i;
+  std::vector<Puzzle>::iterator it;
 
-  for(i = 0; i < _heap.size(); i++){
-    if(target.compareBoard(_heap[i])){
-      if(isSmallerThan(target,_heap[i])){
-        _heap[i] = target;
+  for(it = _heap.begin(); it != _heap.end(); it++){
+    if(target.compareBoard(*it)){
+      if(isSmallerThan(target,*it)){
+        _heap.erase(it);
+        push(target);
         return;
       }
     }
