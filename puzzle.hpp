@@ -13,7 +13,8 @@ class Puzzle{
     int _board[N];
     int _blank;
     int _lastBlank;
-    std::list<int> _path; //alterar para vector
+    Puzzle *_father;
+    int _pathCost;
 
 
     Puzzle getNextStateAux(int nextBlank);
@@ -21,7 +22,7 @@ class Puzzle{
   public:
     Puzzle(int* vec, int lastBlank);
     Puzzle();
-    void childPuzzleCreator(int* vec, int lastBlank, std::list<int> path); //alterar para vector
+    void childPuzzleCreator(int* vec, int lastBlank, int lastPathCost, Puzzle* old); //alterar para vector
     bool isFinalState();
     void getNextStates(std::list<Puzzle> * nextPuzzles); //alterar para vector
     int pathCost();

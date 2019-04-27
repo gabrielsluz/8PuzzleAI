@@ -1,20 +1,8 @@
 #include "puzzle.hpp"
 #include <cmath>
+#include <vector>
 #include <iostream>
 
-
-void Puzzle::childPuzzleCreator(int* vec, int lastBlank, std::list<int> path){ //Creates child puzzle
-  for(int i = 0; i < N; i++){
-    _board[i] = vec[i];
-
-    if(vec[i] == 0)
-      _blank = i;
-  }
-  _lastBlank = lastBlank;
-
-  _path = path;
-  _path.push_front(_blank);
-}
 
 Puzzle::Puzzle(int* vec, int lastBlank){
   for(int i = 0; i < N; i++){
@@ -24,7 +12,8 @@ Puzzle::Puzzle(int* vec, int lastBlank){
       _blank = i;
   }
   _lastBlank = lastBlank;
-  _path.push_front(_blank);
+  _pathCost = 0;
+  _father = NULL;
 }
 
 Puzzle::Puzzle(){
@@ -33,6 +22,8 @@ Puzzle::Puzzle(){
   }
   _lastBlank = 0;
   _blank = 0;
+  _pathCost = 0;
+  _father = NULL;
 }
 
 bool Puzzle::isFinalState(){
@@ -44,9 +35,22 @@ bool Puzzle::isFinalState(){
   return true;
 }
 
+void Puzzle::childPuzzleCreator(int* vec, int lastBlank, int lastPathCost, Puzzle *oldPuzzle){ //Creates child puzzle
+  for(int i = 0; i < N; i++){
+    _board[i] = vec[i];
 
-Puzzle Puzzle::getNextStateAux(int nextBlank){
-  Puzzle nextPuzzle;
+    if(vec[i] == 0)
+      _blank = i;
+  }
+  _lastBlank = lastBlank;
+
+  _pathCost = lastPathCost + 1;
+  _father = oldPuzzle;
+}
+
+
+Puzzle* Puzzle::getNextStateAux(int nextBlank){
+  Puzzle* nextPuzzle = new Puzzle; //Dinamico ou estatico ?
   int nextVec[N];
 
   for(int i = 0; i < N; i++){
@@ -56,7 +60,7 @@ Puzzle Puzzle::getNextStateAux(int nextBlank){
   nextVec[_blank] = nextVec[nextBlank];
   nextVec[nextBlank] = 0;
 
-  nextPuzzle.childPuzzleCreator(nextVec,_blank,_path);
+  nextPuzzle->childPuzzleCreator(nextVec,_blank,_pathCost,this);
 
   //std::cout << nextPuzzle.pathCost() << std::endl;
 
@@ -64,7 +68,7 @@ Puzzle Puzzle::getNextStateAux(int nextBlank){
 }
 
 
-void Puzzle::getNextStates(std::list<Puzzle>* nextPuzzles){
+void Puzzle::getNextStates(std::vector<Puzzle*> &nextPuzzles){
   int nextBlank=0;
 
   if(_blank > COLUMNS-1 && _blank - COLUMNS != _lastBlank){ //Not first row
@@ -93,9 +97,9 @@ void Puzzle::getNextStates(std::list<Puzzle>* nextPuzzles){
 }
 
 int Puzzle::pathCost(){
-  return _path.size()-1;
+  return _pathCost;
 }
-
+/*
 void Puzzle::printPath(){
   std::list<int>::iterator it;
 
@@ -103,7 +107,7 @@ void Puzzle::printPath(){
     std::cout << *it << std::endl;
   }
 }
-
+*/
 
 bool Puzzle::compareBoard(Puzzle cmp){
   int *board = cmp.returnBoard();
