@@ -17,35 +17,35 @@ bool isPuzzleInList(Puzzle target, std::list<Puzzle> list){
 
 
 
-int bfs(Puzzle initialState){
-  std::list <Puzzle> frontier;
+int bfs(Puzzle *initialState){
+  std::list <Puzzle*> frontier;
   std::unordered_set <int> explored;
   std::unordered_set <int> frontierSet;
   std::list <Puzzle> childNodes;
 
-  Puzzle node;
+  Puzzle *node;
   int id = 0;
 
   bool isInFrontier = false;
   bool isInExplored = false;
 
-  if(initialState.isFinalState())
+  if(initialState->isFinalState())
     return 0;
 
   frontier.push_back(initialState);
-  frontierSet.insert(initialState.toNum());
+  frontierSet.insert(initialState->toNum());
 
   while(true){
     if(frontier.empty())
       return -1;
 
     node = frontier.front();
-    id = node.toNum();
+    id = node->toNum();
     frontier.pop_front();
     frontierSet.erase(id);
     explored.insert(id);
 
-    node.getNextStates(&childNodes);
+    node->getNextStates(&childNodes);
 
     for(std::list<Puzzle>::iterator it = childNodes.begin(); it != childNodes.end(); it++){
       id = it->toNum();
@@ -58,7 +58,7 @@ int bfs(Puzzle initialState){
       if(it->isFinalState())
         return it->pathCost();
 
-      frontier.push_back(*it);
+      frontier.push_back(&(*it));
       frontierSet.insert(id);
     }
   }
@@ -77,7 +77,7 @@ int main(){
 
   Puzzle input(in,N);
 
-  solution = bfs(input);
+  solution = bfs(&input);
 
   if(solution == -1)
     std::cout << "Nao tem solucao" << std::endl;

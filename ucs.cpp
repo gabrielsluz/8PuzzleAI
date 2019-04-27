@@ -2,53 +2,63 @@
 #include <iostream>
 #include <list>
 #include "heap.hpp"
+#include <unordered_set>
 
 
 bool isSmallerThan(Puzzle A, Puzzle B){
   return A.pathCost() < B.pathCost();
 }
 
-bool isPuzzleInList(Puzzle target, std::list<Puzzle> list){
-  std::list<Puzzle>::iterator it;
-
-  for(it = list.begin(); it != list.end(); it++){
-    if(target.compareBoard(*it)){
-      return true;
-    }
-  }
-  return false;
-}
 
 
 
-int ucs(Puzzle initialState){
+int ucs(Puzzle initialState)  {
   Heap frontier(isSmallerThan);
-  std::list <Puzzle> explored;
+  std::unordered_set <int> explored;
+  std::unordered_set <int> frontierSet;
   std::list <Puzzle> childNodes;
+
+  bool isInFrontier = false;
+  bool isInExplored = false;
 
   Puzzle node;
 
+  int id =0;
+
   frontier.push(initialState);
+  frontierSet.insert(initialState.toNum());
 
   while(true){
     if(frontier.isEmpty())
       return -1;
 
     node = frontier.top();
+    id = node.toNum();
     frontier.pop();
+    frontierSet.erase(id);
+
+    //std::cout << node.pathCost() << std::endl;
 
     if(node.isFinalState())
       return node.pathCost();
 
-    explored.push_back(node);
+    explored.insert(id);
 
     node.getNextStates(&childNodes);
 
     for(std::list<Puzzle>::iterator it = childNodes.begin(); it != childNodes.end(); it++){
-      if(!(frontier.isPuzzleInHeap(*it)) && !(isPuzzleInList(*it,explored)))
+      id = it->toNum();
+      isInFrontier = frontierSet.find(id) != frontierSet.end();
+      isInExplored = explored.find(id) != explored.end();
+
+      if(!(isInFrontier) && !(isInExplored)){
         frontier.push(*it);
-      else if(frontier.isPuzzleInHeap(*it))
+        frontierSet.insert(id);
+        //std::cout << "Child = " << it->pathCost() << std::endl;
+      }
+      else if(isInFrontier){
         frontier.tryReplace(*it);
+      }
     }
   }
 }

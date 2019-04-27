@@ -2,8 +2,8 @@
 #include <iostream>
 #include <list>
 #include <unordered_set>
-#include "heap.hpp"
 
+#include "heap.hpp"
 
 bool isSmallerThan(Puzzle A, Puzzle B){
   return (A.pathCost() + A.astarH()) < (B.pathCost() + B.astarH());
@@ -36,7 +36,7 @@ int astar(Puzzle initialState){
     frontier.pop();
     frontierSet.erase(id);
 
-    //std::cout << node.pathCost() + node.astarH() << std::endl;
+    std::cout << node.pathCost() + node.astarH() << std::endl;
 
     if(node.isFinalState())
       return node.pathCost();
@@ -53,7 +53,7 @@ int astar(Puzzle initialState){
       if(!(isInFrontier) && !(isInExplored)){
         frontier.push(*it);
         frontierSet.insert(id);
-        //std::cout << "Child = " << it->pathCost() + it->astarH() << std::endl;
+        std::cout << "Child = " << it->pathCost() + it->astarH() << std::endl;
       }
       else if(isInFrontier){
         frontier.tryReplace(*it);
