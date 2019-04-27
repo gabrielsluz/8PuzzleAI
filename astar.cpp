@@ -25,6 +25,8 @@ int astar(Puzzle initialState){
   Heap frontier(isSmallerThan);
   std::list <Puzzle> explored;
   std::list <Puzzle> childNodes;
+  bool isInFrontier = false;
+  bool isInExplored = false;
 
   Puzzle node;
 
@@ -45,9 +47,11 @@ int astar(Puzzle initialState){
     node.getNextStates(&childNodes);
 
     for(std::list<Puzzle>::iterator it = childNodes.begin(); it != childNodes.end(); it++){
-      if(!(frontier.isPuzzleInHeap(*it)) && !(isPuzzleInList(*it,explored)))
+      isInFrontier = frontier.isPuzzleInHeap(*it);
+      isInExplored = isPuzzleInList(*it,explored);
+      if(!(isInFrontier) && !(isInExplored))
         frontier.push(*it);
-      else if(frontier.isPuzzleInHeap(*it))
+      else if(isInFrontier)
         frontier.tryReplace(*it);
     }
   }
