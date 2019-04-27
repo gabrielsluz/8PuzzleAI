@@ -39,6 +39,8 @@ int astar(Puzzle initialState){
     node = frontier.top();
     frontier.pop();
 
+    std::cout << node.pathCost() + node.astarH() << std::endl;
+
     if(node.isFinalState())
       return node.pathCost();
 
@@ -49,10 +51,13 @@ int astar(Puzzle initialState){
     for(std::list<Puzzle>::iterator it = childNodes.begin(); it != childNodes.end(); it++){
       isInFrontier = frontier.isPuzzleInHeap(*it);
       isInExplored = isPuzzleInList(*it,explored);
-      if(!(isInFrontier) && !(isInExplored))
+      if(!(isInFrontier) && !(isInExplored)){
         frontier.push(*it);
-      else if(isInFrontier)
+        std::cout << "Child = " << it->pathCost() + it->astarH() << std::endl;
+      }
+      else if(isInFrontier){
         frontier.tryReplace(*it);
+      }
     }
   }
 }
