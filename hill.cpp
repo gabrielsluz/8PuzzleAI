@@ -1,33 +1,34 @@
 #include "puzzle.hpp"
 #include <iostream>
 #include <list>
+#include <vector>
 
 
 
-int hillClimbing(Puzzle current, int max){
-  std::list <Puzzle> childNodes;
+int hillClimbing(Puzzle *current, int max){
+  std::vector <Puzzle*> *childNodes;
   int cont = 0;
 
-  Puzzle neighbor;
+  Puzzle *neighbor;
 
-  if(current.isFinalState())
+  if(current->isFinalState())
     return 0;
 
 
   while(true){
-    current.getNextStates(&childNodes);
+    childNodes = current->getNextStates();
     //std::cout << current.piecesInPlace() << " ";
-    neighbor = *childNodes.begin();
-    for(std::list<Puzzle>::iterator it = childNodes.begin(); it != childNodes.end(); it++){
-      if(it->piecesInPlace() > neighbor.piecesInPlace()){
+    neighbor = *childNodes->begin();
+    for(std::vector <Puzzle*>::iterator it = childNodes->begin(); it != childNodes->end(); it++){
+      if((*it)->piecesInPlace() > neighbor->piecesInPlace()){
         neighbor = *it;
       }
     }
 
-    if(neighbor.piecesInPlace() < current.piecesInPlace()){
-      return current.pathCost();
+    if(neighbor->piecesInPlace() < current->piecesInPlace()){
+      return current->pathCost();
     }
-    else if(neighbor.piecesInPlace() == current.piecesInPlace()){
+    else if(neighbor->piecesInPlace() == current->piecesInPlace()){
       cont++;
       if(cont >= max){
         return -1;
@@ -36,12 +37,11 @@ int hillClimbing(Puzzle current, int max){
 
     current = neighbor;
 
-    if(current.isFinalState())
-      return current.pathCost();
+    if(current->isFinalState())
+      return current->pathCost();
 
   }
 }
-
 
 
 
@@ -53,7 +53,7 @@ int main(){
     std::cin >> in[i];
   }
 
-  Puzzle input(in,N);
+  Puzzle *input = new Puzzle(in,N);
 
   solution = hillClimbing(input,100*100*100);
 
@@ -61,6 +61,8 @@ int main(){
     std::cout << "Nao tem solucao" << std::endl;
 
   std::cout << std::endl << solution << std::endl;
+
+  input->purgeLeaks();
 
 
   return 0;

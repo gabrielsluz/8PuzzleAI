@@ -12,3 +12,6 @@ ucs:
 
 ids:
 	clang++ ids.cpp puzzle.cpp
+
+hill:
+	clang++ hill.cpp puzzle.cpp
