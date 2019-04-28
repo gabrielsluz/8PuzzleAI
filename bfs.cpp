@@ -2,6 +2,7 @@
 #include <iostream>
 #include <unordered_set>
 #include <list>
+#include <vector>
 
 bool isPuzzleInList(Puzzle target, std::list<Puzzle> list){
   std::list<Puzzle>::iterator it;
@@ -21,7 +22,7 @@ int bfs(Puzzle *initialState){
   std::list <Puzzle*> frontier;
   std::unordered_set <int> explored;
   std::unordered_set <int> frontierSet;
-  std::list <Puzzle> childNodes;
+  std::vector <Puzzle*> *childNodes;
 
   Puzzle *node;
   int id = 0;
@@ -45,20 +46,20 @@ int bfs(Puzzle *initialState){
     frontierSet.erase(id);
     explored.insert(id);
 
-    node->getNextStates(&childNodes);
+    childNodes = node->getNextStates();
 
-    for(std::list<Puzzle>::iterator it = childNodes.begin(); it != childNodes.end(); it++){
-      id = it->toNum();
+    for(std::vector<Puzzle*>::iterator it = childNodes->begin(); it != childNodes->end(); it++){
+      id = (*it)->toNum();
       isInFrontier = frontierSet.find(id) != frontierSet.end();
       isInExplored = explored.find(id) != explored.end();
 
       if(isInFrontier || isInExplored)
         continue;
 
-      if(it->isFinalState())
-        return it->pathCost();
+      if((*it)->isFinalState())
+        return (*it)->pathCost();
 
-      frontier.push_back(&(*it));
+      frontier.push_back(*it);
       frontierSet.insert(id);
     }
   }

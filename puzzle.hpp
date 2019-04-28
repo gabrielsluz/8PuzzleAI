@@ -7,6 +7,7 @@
 
 #include <list>
 #include <string>
+#include <vector>
 
 class Puzzle{
   private:
@@ -15,16 +16,17 @@ class Puzzle{
     int _lastBlank;
     Puzzle *_father;
     int _pathCost;
+    std::vector<Puzzle*> _nextPuzzles;
 
 
-    Puzzle getNextStateAux(int nextBlank);
+    Puzzle* getNextStateAux(int nextBlank);
 
   public:
     Puzzle(int* vec, int lastBlank);
     Puzzle();
-    void childPuzzleCreator(int* vec, int lastBlank, int lastPathCost, Puzzle* old); //alterar para vector
+    void childPuzzleCreator(int* vec, int lastBlank, int lastPathCost, Puzzle *oldPuzzle);
     bool isFinalState();
-    void getNextStates(std::list<Puzzle> * nextPuzzles); //alterar para vector
+    std::vector<Puzzle*> * getNextStates();
     int pathCost();
     void printPath();
     bool compareBoard(Puzzle cmp);

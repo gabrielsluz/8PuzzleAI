@@ -50,7 +50,7 @@ void Puzzle::childPuzzleCreator(int* vec, int lastBlank, int lastPathCost, Puzzl
 
 
 Puzzle* Puzzle::getNextStateAux(int nextBlank){
-  Puzzle* nextPuzzle = new Puzzle; //Dinamico ou estatico ?
+  Puzzle* nextPuzzle = new Puzzle;
   int nextVec[N];
 
   for(int i = 0; i < N; i++){
@@ -68,32 +68,34 @@ Puzzle* Puzzle::getNextStateAux(int nextBlank){
 }
 
 
-void Puzzle::getNextStates(std::vector<Puzzle*> &nextPuzzles){
+std::vector<Puzzle*> * Puzzle::getNextStates(){
   int nextBlank=0;
 
   if(_blank > COLUMNS-1 && _blank - COLUMNS != _lastBlank){ //Not first row
     nextBlank = _blank - COLUMNS;
 
-    nextPuzzles->push_back(getNextStateAux(nextBlank));
+    _nextPuzzles.push_back(getNextStateAux(nextBlank));
   }
 
   if(_blank < N-COLUMNS && _blank + COLUMNS != _lastBlank){ //Not last row
     nextBlank = _blank + COLUMNS;
 
-    nextPuzzles->push_back(getNextStateAux(nextBlank));
+    _nextPuzzles.push_back(getNextStateAux(nextBlank));
   }
 
   if(_blank % COLUMNS != 0  && _blank - 1 != _lastBlank){ //Not first column
     nextBlank = _blank - 1;
 
-    nextPuzzles->push_back(getNextStateAux(nextBlank));
+    _nextPuzzles.push_back(getNextStateAux(nextBlank));
   }
 
   if(_blank % COLUMNS != COLUMNS-1  && _blank + 1 != _lastBlank){ //Not last column
     nextBlank = _blank + 1;
 
-    nextPuzzles->push_back(getNextStateAux(nextBlank));
+    _nextPuzzles.push_back(getNextStateAux(nextBlank));
   }
+
+  return &_nextPuzzles;
 }
 
 int Puzzle::pathCost(){
