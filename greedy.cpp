@@ -32,16 +32,13 @@ int greedy(Puzzle *initialState){
     if(frontier.isEmpty())
       return -1;
 
-      std::cout << "Heap = ";
-      frontier.printHeap();
-      std::cout << std::endl;
 
     node = frontier.top();
     id = node->toNum();
     frontier.pop();
     frontierSet.erase(id);
 
-    std::cout << node->greedyH()<< std::endl;
+    //std::cout << node->greedyH()<< std::endl;
 
     if(node->isFinalState())
       return node->pathCost();
@@ -58,7 +55,7 @@ int greedy(Puzzle *initialState){
       if(!(isInFrontier) && !(isInExplored)){
         frontier.push(*it);
         frontierSet.insert(id);
-        std::cout << "Child = " << (*it)->greedyH() << std::endl;
+        //std::cout << "Child = " << (*it)->greedyH() << std::endl;
       }
       else if(isInFrontier){
         frontier.tryReplace(*it);
