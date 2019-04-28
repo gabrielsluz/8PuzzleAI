@@ -5,56 +5,60 @@
 #include <unordered_set>
 
 
-bool isSmallerThan(Puzzle A, Puzzle B){
-  return A.pathCost() < B.pathCost();
+bool isSmallerThan(Puzzle *A, Puzzle *B){
+  return A->pathCost() < B->pathCost();
 }
 
 
 
 
-int ucs(Puzzle initialState)  {
+int ucs(Puzzle *initialState){
   Heap frontier(isSmallerThan);
   std::unordered_set <int> explored;
   std::unordered_set <int> frontierSet;
-  std::list <Puzzle> childNodes;
+  std::vector <Puzzle*> *childNodes;
 
   bool isInFrontier = false;
   bool isInExplored = false;
 
-  Puzzle node;
+  Puzzle *node;
 
   int id =0;
 
   frontier.push(initialState);
-  frontierSet.insert(initialState.toNum());
+  frontierSet.insert(initialState->toNum());
 
   while(true){
     if(frontier.isEmpty())
       return -1;
 
+      std::cout << "Heap = ";
+      frontier.printHeap();
+      std::cout << std::endl;
+      
     node = frontier.top();
-    id = node.toNum();
+    id = node->toNum();
     frontier.pop();
     frontierSet.erase(id);
 
-    //std::cout << node.pathCost() << std::endl;
+    //std::cout << node->pathCost()<< std::endl;
 
-    if(node.isFinalState())
-      return node.pathCost();
+    if(node->isFinalState())
+      return node->pathCost();
 
     explored.insert(id);
 
-    node.getNextStates(&childNodes);
+    childNodes = node->getNextStates();
 
-    for(std::list<Puzzle>::iterator it = childNodes.begin(); it != childNodes.end(); it++){
-      id = it->toNum();
+    for(std::vector<Puzzle*>::iterator it = childNodes->begin(); it != childNodes->end(); it++){
+      id = (*it)->toNum();
       isInFrontier = frontierSet.find(id) != frontierSet.end();
       isInExplored = explored.find(id) != explored.end();
 
       if(!(isInFrontier) && !(isInExplored)){
         frontier.push(*it);
         frontierSet.insert(id);
-        //std::cout << "Child = " << it->pathCost() << std::endl;
+        //std::cout << "Child = " << (*it)->pathCost() << std::endl;
       }
       else if(isInFrontier){
         frontier.tryReplace(*it);
@@ -62,7 +66,6 @@ int ucs(Puzzle initialState)  {
     }
   }
 }
-
 
 
 int main(){
@@ -73,7 +76,8 @@ int main(){
     std::cin >> in[i];
   }
 
-  Puzzle input(in,N);
+  Puzzle *input = new Puzzle(in,N);
+
 
   solution = ucs(input);
 

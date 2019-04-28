@@ -30,6 +30,10 @@ int astar(Puzzle *initialState){
   while(true){
     if(frontier.isEmpty())
       return -1;
+/*
+    std::cout << "Heap = ";
+    frontier.printHeap();
+    std::cout << std::endl;*/
 
     node = frontier.top();
     id = node->toNum();
@@ -38,8 +42,10 @@ int astar(Puzzle *initialState){
 
     //std::cout << node->pathCost() + node->astarH() << std::endl;
 
-    if(node->isFinalState())
+    if(node->isFinalState()){
+      node->printPath();
       return node->pathCost();
+    }
 
     explored.insert(id);
 
@@ -51,9 +57,10 @@ int astar(Puzzle *initialState){
       isInExplored = explored.find(id) != explored.end();
 
       if(!(isInFrontier) && !(isInExplored)){
+      //  std::cout << "Child = " << (*it)->pathCost() + (*it)->astarH() << std::endl;
         frontier.push(*it);
         frontierSet.insert(id);
-        //std::cout << "Child = " << it->pathCost() + it->astarH() << std::endl;
+
       }
       else if(isInFrontier){
         frontier.tryReplace(*it);

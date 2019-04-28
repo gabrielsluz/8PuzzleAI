@@ -2,57 +2,70 @@
 #include <iostream>
 #include <list>
 #include "heap.hpp"
+#include <unordered_set>
 
 
-bool isSmallerThan(Puzzle A, Puzzle B){
-  return A.greedyH() < B.greedyH();
-}
-
-bool isPuzzleInList(Puzzle target, std::list<Puzzle> list){
-  std::list<Puzzle>::iterator it;
-
-  for(it = list.begin(); it != list.end(); it++){
-    if(target.compareBoard(*it)){
-      return true;
-    }
-  }
-  return false;
+bool isSmallerThan(Puzzle *A, Puzzle *B){
+  return A->greedyH() < B->greedyH();
 }
 
 
 
-int greedy(Puzzle initialState){
+
+int greedy(Puzzle *initialState){
   Heap frontier(isSmallerThan);
-  std::list <Puzzle> explored;
-  std::list <Puzzle> childNodes;
+  std::unordered_set <int> explored;
+  std::unordered_set <int> frontierSet;
+  std::vector <Puzzle*> *childNodes;
 
-  Puzzle node;
+  bool isInFrontier = false;
+  bool isInExplored = false;
+
+  Puzzle *node;
+
+  int id =0;
 
   frontier.push(initialState);
+  frontierSet.insert(initialState->toNum());
 
   while(true){
     if(frontier.isEmpty())
       return -1;
 
+      std::cout << "Heap = ";
+      frontier.printHeap();
+      std::cout << std::endl;
+
     node = frontier.top();
+    id = node->toNum();
     frontier.pop();
+    frontierSet.erase(id);
 
-    if(node.isFinalState())
-      return node.pathCost();
+    std::cout << node->greedyH()<< std::endl;
 
-    explored.push_back(node);
+    if(node->isFinalState())
+      return node->pathCost();
 
-    node.getNextStates(&childNodes);
+    explored.insert(id);
 
-    for(std::list<Puzzle>::iterator it = childNodes.begin(); it != childNodes.end(); it++){
-      if(!(frontier.isPuzzleInHeap(*it)) && !(isPuzzleInList(*it,explored)))
+    childNodes = node->getNextStates();
+
+    for(std::vector<Puzzle*>::iterator it = childNodes->begin(); it != childNodes->end(); it++){
+      id = (*it)->toNum();
+      isInFrontier = frontierSet.find(id) != frontierSet.end();
+      isInExplored = explored.find(id) != explored.end();
+
+      if(!(isInFrontier) && !(isInExplored)){
         frontier.push(*it);
-      else if(frontier.isPuzzleInHeap(*it))
+        frontierSet.insert(id);
+        std::cout << "Child = " << (*it)->greedyH() << std::endl;
+      }
+      else if(isInFrontier){
         frontier.tryReplace(*it);
+      }
     }
   }
 }
-
 
 
 int main(){
@@ -63,7 +76,8 @@ int main(){
     std::cin >> in[i];
   }
 
-  Puzzle input(in,N);
+  Puzzle *input = new Puzzle(in,N);
+
 
   solution = greedy(input);
 

@@ -1,6 +1,7 @@
 #include "heap.hpp"
 #include <vector>
 #include "puzzle.hpp"
+#include <iostream>
 
 int Heap::_parent(int i){
   return (i-1)/2;
@@ -25,7 +26,7 @@ void Heap::_heapifyDown(int i){
   if(left < _heap.size() && isSmallerThan(_heap[left],_heap[i]))
     min = left;
 
-  if(right < _heap.size() && isSmallerThan(_heap[right],_heap[i]))
+  if(right < _heap.size() && isSmallerThan(_heap[right],_heap[min]))
     min = right;
 
   if(min != i){
@@ -62,11 +63,10 @@ void Heap::push(Puzzle *node){
   _heap.push_back(node);
 
   _heapifyUp(_heap.size() - 1);
-
 }
 
 void Heap::pop(){
-  if(isEmpty()) //Mistake
+  if(isEmpty())
     return;
 
   _heap[0] = _heap.back();
@@ -102,5 +102,15 @@ void Heap::tryReplace(Puzzle *target){
         return;
       }
     }
+  }
+}
+
+void Heap::printHeap(){
+  std::vector<Puzzle*>::iterator it;
+
+  for(it = _heap.begin(); it != _heap.end(); it++){
+    std::cout << (*it)->pathCost() + (*it)->astarH() << " ";
+    //std::cout << (*it)->pathCost() << " ";
+    //std::cout << (*it)->greedyH() << " ";
   }
 }

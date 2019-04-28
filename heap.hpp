@@ -32,6 +32,8 @@ class Heap{
     bool isPuzzleInHeap(Puzzle *target);
     void tryReplace(Puzzle *target);
 
+    void printHeap();
+
 
 };
 
