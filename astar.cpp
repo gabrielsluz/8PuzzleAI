@@ -89,6 +89,8 @@ int main(){
 
   std::cout << std::endl << solution << std::endl;
 
+  input->purgeLeaks();
+
 
   return 0;
 }

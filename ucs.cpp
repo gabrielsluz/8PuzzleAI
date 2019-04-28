@@ -35,7 +35,7 @@ int ucs(Puzzle *initialState){
       std::cout << "Heap = ";
       frontier.printHeap();
       std::cout << std::endl;
-      
+
     node = frontier.top();
     id = node->toNum();
     frontier.pop();
@@ -85,6 +85,8 @@ int main(){
     std::cout << "Nao tem solucao" << std::endl;
 
   std::cout << std::endl << solution << std::endl;
+
+  input->purgeLeaks();
 
 
   return 0;
