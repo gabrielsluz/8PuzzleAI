@@ -9,3 +9,6 @@ greedy:
 
 ucs:
 	clang++ ucs.cpp heap.cpp puzzle.cpp
+
+ids:
+	clang++ ids.cpp puzzle.cpp

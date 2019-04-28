@@ -4,18 +4,6 @@
 #include <list>
 #include <vector>
 
-bool isPuzzleInList(Puzzle target, std::list<Puzzle> list){
-  std::list<Puzzle>::iterator it;
-
-  for(it = list.begin(); it != list.end(); it++){
-    if(target.compareBoard(*it)){
-      return true;
-    }
-  }
-  return false;
-}
-
-
 
 
 int bfs(Puzzle *initialState){

@@ -198,3 +198,12 @@ void Puzzle::purgeLeaks(){ //DFS to free memory
   }
   delete this;
 }
+
+void Puzzle::purgeSubTree(){
+  std::vector<Puzzle *>::iterator it;
+  for(it = _nextPuzzles.begin(); it != _nextPuzzles.end(); it++){
+    (*it)->purgeLeaks();
+  }
+  _nextPuzzles.clear();
+
+}

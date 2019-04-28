@@ -42,6 +42,7 @@ class Puzzle{
     int absoluteValue(int a);
     int toNum();
     void purgeLeaks();
+    void purgeSubTree();
 
 
 };
