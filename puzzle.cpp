@@ -164,7 +164,7 @@ int Puzzle::astarH(){ //Returns the sum of the Manhattan distances of the miss p
   int sum=0;
   for(int i = 0; i < N; i++){
     if(_board[i] != i+1 && _board[i] != 0){
-      sum += absoluteValue(getRow(_board[i]) - getRow(i)) + absoluteValue(getColumn(_board[i]) - getColumn(i));
+      sum += absoluteValue(getRow(_board[i]-1) - getRow(i)) + absoluteValue(getColumn(_board[i]-1) - getColumn(i));
     }
   }
 

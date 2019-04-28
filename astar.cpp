@@ -6,7 +6,7 @@
 #include "heap.hpp"
 
 bool isSmallerThan(Puzzle* A, Puzzle* B){
-  return (A->pathCost() + A->greedyH()) < (B->pathCost() + B->greedyH());
+  return (A->pathCost() + A->astarH()) < (B->pathCost() + B->astarH());
 }
 
 
