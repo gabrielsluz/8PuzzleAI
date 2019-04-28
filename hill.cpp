@@ -26,12 +26,15 @@ int hillClimbing(Puzzle *current, int max){
     }
 
     if(neighbor->piecesInPlace() < current->piecesInPlace()){
-      return current->pathCost();
+      if(current->isFinalState())
+        return current->pathCost();
+      else
+        return -2;
     }
     else if(neighbor->piecesInPlace() == current->piecesInPlace()){
       cont++;
       if(cont >= max){
-        return -1;
+        return -2;
       }
     }
 
@@ -59,6 +62,8 @@ int main(){
 
   if(solution == -1)
     std::cout << "Nao tem solucao" << std::endl;
+  else if(solution == -2)
+    std::cout << "Nao encontrou solucao" << std::endl;
 
   std::cout << std::endl << solution << std::endl;
 
