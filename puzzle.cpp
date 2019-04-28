@@ -70,6 +70,7 @@ Puzzle* Puzzle::getNextStateAux(int nextBlank){
 
 std::vector<Puzzle*> * Puzzle::getNextStates(){
   int nextBlank=0;
+  _nextPuzzles.clear();
 
   if(_blank > COLUMNS-1 && _blank - COLUMNS != _lastBlank){ //Not first row
     nextBlank = _blank - COLUMNS;
