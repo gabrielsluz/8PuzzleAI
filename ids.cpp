@@ -11,8 +11,10 @@ int depthLimitedSearch(Puzzle *state, int limit){
 
   int result=0;
 
-  if(state->isFinalState())
+  if(state->isFinalState()){
+    state->printPath();
     return state->pathCost();
+  }
   else if(limit == 0)
     return -2; //cutoff
 
@@ -44,10 +46,10 @@ int ids(Puzzle *initialState){ //Iterative deepening search
 
     result = depthLimitedSearch(initialState, depth);
 
-    initialState->purgeSubTree();
-
     if(result != -2)
       return result;
+
+    initialState->purgeSubTree();
   }
 }
 
@@ -71,7 +73,7 @@ int main(){
 
   std::cout << std::endl << solution << std::endl;
 
-
+  input->purgeLeaks();
 
   return 0;
 }

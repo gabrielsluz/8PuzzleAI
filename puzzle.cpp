@@ -121,8 +121,8 @@ void Puzzle::printBoard(){
 }
 
 
-bool Puzzle::compareBoard(Puzzle cmp){
-  int *board = cmp.returnBoard();
+bool Puzzle::compareBoard(Puzzle *cmp){
+  int *board = cmp->returnBoard();
   for(int i=0; i < N; i++){
     if(board[i] != _board[i])
       return false;

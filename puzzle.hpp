@@ -32,7 +32,7 @@ class Puzzle{
     int pathCost();
     void printPath();
     void printBoard();
-    bool compareBoard(Puzzle cmp);
+    bool compareBoard(Puzzle *cmp);
     int* returnBoard();
     int greedyH();
     int astarH();

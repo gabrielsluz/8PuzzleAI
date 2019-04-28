@@ -18,7 +18,7 @@ void Heap::_heapifyDown(int i){
   int left = _leftChild(i);
   int right = _rightChild(i);
 
-  Puzzle swapper;
+  Puzzle *swapper;
 
   int min = i;
 
@@ -41,7 +41,7 @@ void Heap::_heapifyUp(int i){
   if(i == 0)
     return;
 
-  Puzzle swapper;
+  Puzzle *swapper;
 
   if(isSmallerThan(_heap[i],_heap[_parent(i)])){
     swapper = _heap[_parent(i)];
@@ -53,12 +53,12 @@ void Heap::_heapifyUp(int i){
 
 }
 
-Puzzle Heap::top(){
+Puzzle* Heap::top(){
   return _heap.front();
 }
 
 
-void Heap::push(Puzzle node){
+void Heap::push(Puzzle *node){
   _heap.push_back(node);
 
   _heapifyUp(_heap.size() - 1);
@@ -81,21 +81,21 @@ bool Heap::isEmpty(){
 }
 
 
-bool Heap::isPuzzleInHeap(Puzzle target){
-  std::vector<Puzzle>::iterator it;
+bool Heap::isPuzzleInHeap(Puzzle *target){
+  std::vector<Puzzle*>::iterator it;
   for(it = _heap.begin(); it != _heap.end(); it++){
-    if(target.compareBoard(*it)){
+    if(target->compareBoard(*it)){
       return true;
     }
   }
   return false;
 }
 
-void Heap::tryReplace(Puzzle target){
-  std::vector<Puzzle>::iterator it;
+void Heap::tryReplace(Puzzle *target){
+  std::vector<Puzzle*>::iterator it;
 
   for(it = _heap.begin(); it != _heap.end(); it++){
-    if(target.compareBoard(*it)){
+    if(target->compareBoard(*it)){
       if(isSmallerThan(target,*it)){
         _heap.erase(it);
         push(target);

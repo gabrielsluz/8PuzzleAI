@@ -6,7 +6,7 @@
 
 class Heap{
   private:
-    std::vector<Puzzle> _heap;
+    std::vector<Puzzle*> _heap;
 
     int _parent(int i);
     int _leftChild(int i);
@@ -16,21 +16,21 @@ class Heap{
     void _heapifyUp(int i);
 
 
-    bool (*isSmallerThan)(Puzzle, Puzzle);
+    bool (*isSmallerThan)(Puzzle*, Puzzle*);
 
 
   public:
 
-    Heap (bool (*isSmallerThanParameter)(Puzzle, Puzzle)) : isSmallerThan(isSmallerThanParameter){}
+    Heap (bool (*isSmallerThanParameter)(Puzzle*, Puzzle*)) : isSmallerThan(isSmallerThanParameter){}
 
-    Puzzle top();
-    void push(Puzzle node);
+    Puzzle* top();
+    void push(Puzzle *node);
     void pop();
 
     bool isEmpty();
 
-    bool isPuzzleInHeap(Puzzle target);
-    void tryReplace(Puzzle target);
+    bool isPuzzleInHeap(Puzzle *target);
+    void tryReplace(Puzzle *target);
 
 
 };
