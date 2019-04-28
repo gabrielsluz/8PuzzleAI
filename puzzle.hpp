@@ -14,14 +14,16 @@ class Puzzle{
     int _board[N];
     int _blank;
     int _lastBlank;
-    Puzzle *_father;
     int _pathCost;
-    std::vector<Puzzle*> _nextPuzzles;
+
 
 
     Puzzle* getNextStateAux(int nextBlank);
 
   public:
+    Puzzle *_father;
+    std::vector<Puzzle*> _nextPuzzles;
+
     Puzzle(int* vec, int lastBlank);
     Puzzle();
     void childPuzzleCreator(int* vec, int lastBlank, int lastPathCost, Puzzle *oldPuzzle);
@@ -29,6 +31,7 @@ class Puzzle{
     std::vector<Puzzle*> * getNextStates();
     int pathCost();
     void printPath();
+    void printBoard();
     bool compareBoard(Puzzle cmp);
     int* returnBoard();
     int greedyH();
@@ -38,6 +41,7 @@ class Puzzle{
     int getColumn(int i);
     int absoluteValue(int a);
     int toNum();
+    void purgeLeaks();
 
 
 };

@@ -53,11 +53,16 @@ int bfs(Puzzle *initialState){
       isInFrontier = frontierSet.find(id) != frontierSet.end();
       isInExplored = explored.find(id) != explored.end();
 
-      if(isInFrontier || isInExplored)
+      if(isInFrontier || isInExplored){
+        //Desaloca no
         continue;
+      }
 
-      if((*it)->isFinalState())
+      if((*it)->isFinalState()){
+        //Desaloca no
+        (*it)->printPath();
         return (*it)->pathCost();
+      }
 
       frontier.push_back(*it);
       frontierSet.insert(id);
@@ -76,14 +81,16 @@ int main(){
     std::cin >> in[i];
   }
 
-  Puzzle input(in,N);
+  Puzzle *input = new Puzzle(in,N);
 
-  solution = bfs(&input);
+  solution = bfs(input);
 
   if(solution == -1)
     std::cout << "Nao tem solucao" << std::endl;
 
   std::cout << std::endl << solution << std::endl;
+
+  input->purgeLeaks();
 
 
   return 0;

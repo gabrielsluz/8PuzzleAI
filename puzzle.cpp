@@ -101,15 +101,25 @@ std::vector<Puzzle*> * Puzzle::getNextStates(){
 int Puzzle::pathCost(){
   return _pathCost;
 }
-/*
-void Puzzle::printPath(){
-  std::list<int>::iterator it;
 
-  for(it = _path.begin(); it != _path.end(); it++){
-    std::cout << *it << std::endl;
+void Puzzle::printPath(){
+  Puzzle* aux;
+  aux = this;
+  while(aux != NULL){
+    aux->printBoard();
+    std::cout << std::endl;
+    aux = aux->_father;
   }
 }
-*/
+
+void Puzzle::printBoard(){
+  for(int i=0; i < N; i++){
+    if(i%COLUMNS == 0)
+      std::cout << std::endl;
+    std::cout << _board[i] << " ";
+  }
+}
+
 
 bool Puzzle::compareBoard(Puzzle cmp){
   int *board = cmp.returnBoard();
@@ -179,4 +189,12 @@ int Puzzle::toNum(){
     id += _board[i]*(std::pow(10,i));
   }
   return id;
+}
+
+void Puzzle::purgeLeaks(){ //DFS to free memory
+  std::vector<Puzzle *>::iterator it;
+  for(it = _nextPuzzles.begin(); it != _nextPuzzles.end(); it++){
+    (*it)->purgeLeaks();
+  }
+  delete this;
 }
