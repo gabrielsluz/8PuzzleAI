@@ -81,7 +81,7 @@ int main(){
   int solution=0;
 
   double times[20];
-  int count = 10;
+  int count = 5;
 
   for(int i=0; i < N; i++){
     std::cin >> in[i];
