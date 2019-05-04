@@ -1,23 +1,19 @@
-CC=clang++
-BUILD_DIR = ./build
-SRC_DIR = ./src
-INCLUDE_DIR = ./include
-BIN_DIR = ./bin
+SRC_DIR= ./src
 
-${BIN_DIR}/astar: ${BUILD_DIR}/astar.o ${BUILD_DIR}/puzzle.o
-	${CC} -o ${BIN_DIR}/astar ${BUILD_DIR}/astar.o ${BUILD_DIR}/puzzle.o
+bfs:
+	clang++ ${SRC_DIR}/bfs.cpp ${SRC_DIR}/puzzle.cpp
 
-${BIN_DIR}/bfs: ${BUILD_DIR}/bfs.o ${BUILD_DIR}/puzzle.o
-	${CC} -o ${BIN_DIR}/bfs ${BUILD_DIR}/bfs.o ${BUILD_DIR}/puzzle.o
+ids:
+	clang++ ${SRC_DIR}/ids.cpp ${SRC_DIR}/puzzle.cpp
 
-${BIN_DIR}/greedy: ${BUILD_DIR}/greedy.o ${BUILD_DIR}/puzzle.o
-	${CC} -o ${BIN_DIR}/greedy ${BUILD_DIR}/greedy.o ${BUILD_DIR}/puzzle.o
+astar:
+	clang++ ${SRC_DIR}/astar.cpp ${SRC_DIR}/heap.cpp ${SRC_DIR}/puzzle.cpp
 
-${BIN_DIR}/ucs: ${BUILD_DIR}/ucs.o ${BUILD_DIR}/puzzle.o
-	${CC} -o ${BIN_DIR}/ucs ${BUILD_DIR}/ucs.o ${BUILD_DIR}/puzzle.o
+greedy:
+	clang++ ${SRC_DIR}/greedy.cpp ${SRC_DIR}/heap.cpp ${SRC_DIR}/puzzle.cpp
 
-${BIN_DIR}/ids: ${BUILD_DIR}/ids.o ${BUILD_DIR}/puzzle.o
-	${CC} -o ${BIN_DIR}/ids ${BUILD_DIR}/ids.o ${BUILD_DIR}/puzzle.o
+ucs:
+	clang++ ${SRC_DIR}/ucs.cpp ${SRC_DIR}/heap.cpp ${SRC_DIR}/puzzle.cpp
 
-${BIN_DIR}/hill: ${BUILD_DIR}/hill.o ${BUILD_DIR}/puzzle.o
-	${CC} -o ${BIN_DIR}/hill ${BUILD_DIR}/hill.o ${BUILD_DIR}/puzzle.o
+hill:
+	clang++ ${SRC_DIR}/hill.cpp ${SRC_DIR}/puzzle.cpp
