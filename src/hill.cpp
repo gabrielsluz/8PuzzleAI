@@ -40,8 +40,10 @@ int hillClimbing(Puzzle *current, int max){
 
     current = neighbor;
 
-    if(current->isFinalState())
+    if(current->isFinalState()){
+      current->printPath();
       return current->pathCost();
+    }
 
   }
 }

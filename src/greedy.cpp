@@ -40,8 +40,10 @@ int greedy(Puzzle *initialState){
 
     //std::cout << node->greedyH()<< std::endl;
 
-    if(node->isFinalState())
+    if(node->isFinalState()){
+      node->printPath();
       return node->pathCost();
+    }
 
     explored.insert(id);
 
