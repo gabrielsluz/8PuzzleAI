@@ -1,4 +1,4 @@
-SRC_DIR= ./src
+SRC_DIR= ./src-tsts
 
 bfs:
 	clang++ ${SRC_DIR}/bfs.cpp ${SRC_DIR}/puzzle.cpp
